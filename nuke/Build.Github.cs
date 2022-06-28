@@ -85,7 +85,7 @@ internal partial class Build
 
             foreach (var artifact in packages)
             {
-                var releaseAssetUpload = new ReleaseAssetUpload(artifact, "application/zip", File.OpenRead(artifact), null);
+                var releaseAssetUpload = new ReleaseAssetUpload(Path.GetFileName(artifact), "application/zip", File.OpenRead(artifact), null);
                 var releaseAsset = await GitHubClient.Repository.Release.UploadAsset(release, releaseAssetUpload);
                 Log.Information("upload {BrowserDownloadUrl}", releaseAsset.BrowserDownloadUrl);
             }
