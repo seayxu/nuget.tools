@@ -3,10 +3,12 @@
         xmlns:vm="using:NuGet.Tools.Desktop.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="450"
-        Width="480"
+        mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="450"
+        Width="550"
         Height="450"
         CanResize="False"
+        Name="app"
+        WindowStartupLocation="CenterScreen"
         x:Class="NuGet.Tools.Desktop.Views.MainWindow"
         Icon="/Assets/nuget.ico"
         Title="NuGet.Tools.Desktop">
@@ -14,15 +16,23 @@
   <Design.DataContext>
     <vm:MainWindowViewModel />
   </Design.DataContext>
+  <Window.Styles>
+    <Style Selector="Button">
+      <Setter Property="Width" Value="70" />
+      <Setter Property="Margin" Value="2" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+    </Style>
+  </Window.Styles>
 
   <StackPanel Orientation="Vertical" Margin="5">
     <StackPanel Orientation="Horizontal">
       <StackPanel  Orientation="Vertical">
-        <StackPanel Orientation="Horizontal" Margin="5 10 5 15" HorizontalAlignment="Stretch">
+        <StackPanel Orientation="Horizontal" Margin="5 2 5 29" HorizontalAlignment="Stretch">
           <TextBlock Width="80" Text="Package Id:" HorizontalAlignment="Right" VerticalAlignment="Center" />
           <TextBox Width="300" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" Text="{Binding PackageId}"  Watermark="NuGet Package Id" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal"  Margin="5 15 5 10">
+        <StackPanel Orientation="Horizontal"  Margin="5">
           <StackPanel Orientation="Horizontal">
             <TextBlock  Width="80" Text="Api Key:" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
             <TextBox Width="300" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" Text="{Binding NuGetApiKey}" Watermark="NuGet Api Key" PasswordChar="*" />
@@ -30,14 +40,22 @@
         </StackPanel>
       </StackPanel>
 
-      <StackPanel Orientation="Vertical" Width="70"  Margin="5">
-        <Button HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" Command="{Binding OnGetCommand}" Margin="0 5 0 0" >Get</Button>
-        <Button HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" Command="{Binding OnDeleteCommand}" Margin="0 2" >Delete</Button>
-        <Button HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" Command="{Binding OnListCommand}">List</Button>
+      <StackPanel Orientation="Vertical" Width="150">
+        <StackPanel Orientation="Horizontal">
+          <Button Command="{Binding OnPushBrowseCommand}" CommandParameter="{Binding #app}">Browse</Button>
+          <Button Command="{Binding OnPushCommand}">Push</Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <Button Width="142" Command="{Binding OnGetCommand}">Get All Versions</Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <Button  Command="{Binding OnDeleteCommand}">Delete</Button>
+          <Button Command="{Binding OnListCommand}">List</Button>
+        </StackPanel>
       </StackPanel>
     </StackPanel>
     <Panel HorizontalAlignment="Stretch">
-      <ListBox SelectionMode="Multiple,Toggle" Height="300" ScrollViewer.VerticalScrollBarVisibility="Visible"  HorizontalAlignment="Stretch" Items="{Binding Versions, Mode=TwoWay}" SelectedItems="{Binding SelectedItems}">
+      <ListBox SelectionMode="Multiple,Toggle" Height="308" ScrollViewer.VerticalScrollBarVisibility="Visible"  HorizontalAlignment="Stretch" Items="{Binding Versions, Mode=TwoWay}" SelectedItems="{Binding SelectedItems}">
         <ListBox.Styles>
           <!-- Give the ListBoxItems a fixed with of 100 and right-align them -->
           <Style Selector="ListBoxItem">
@@ -49,7 +67,7 @@
           <DataTemplate>
             <WrapPanel>
               <TextBlock Width="80" Text="{Binding Status, Mode=TwoWay}" />
-              <TextBlock Text="{Binding Version}" />
+              <TextBlock Text="{Binding Content}" />
             </WrapPanel>
           </DataTemplate>
         </ListBox.ItemTemplate>

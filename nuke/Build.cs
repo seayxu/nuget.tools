@@ -65,6 +65,7 @@ internal partial class Build : NukeBuild
             SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
             EnsureCleanDirectory(OutputDirectory);
             EnsureCleanDirectory(ArtifactsDirectory);
+            EnsureCleanDirectory(PublishDirectory);
         });
 
     private Target Restore => _ => _
