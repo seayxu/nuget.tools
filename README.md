@@ -5,8 +5,12 @@
 
 A nuget tools app.
 
+## Requirements
+- net6.0
+
 ## Features
 - Versions
+- Push
 - Delete
 - ReList
 
